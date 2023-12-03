@@ -67,9 +67,9 @@ export const deleteQuestionById = async(req,res,next)=>{
         const deletedOption = await deleteQuestion(id);
         if(!deletedOption)
         {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
-                msg: "This question can't deleted because its options has votes."
+                error: "This question can't deleted because its options has votes."
             });
         }
         res.status(200).json({

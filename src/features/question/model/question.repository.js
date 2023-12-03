@@ -51,28 +51,33 @@ export const addOption = async(text, id)=>{
 }
 
 // Function to delete a specfic question from database by id.
-export const deleteQuestion = async(id)=>{
+export const deleteQuestion = async (id) => {
     try {
-        const question = await QuestionModel.findByIdAndDelete(id);
-        if(!question)
-        {
+        const question = await QuestionModel.findById(id);
+        if (!question) {
             throw new ApplicationError("No question found by this id.", 404);
         }
-        const options = await OptionModel.find({question: id});
-        const isOptionHasVotes = options.find((option)=> option.votes > 0);
-        if(isOptionHasVotes)
-        {
-            throw new ApplicationError("Question cannot deleted beacuse its option has votes.", 400);
-        }
-        else
-        {
+
+        const options = await OptionModel.find({ question: id });
+        const isOptionHasVotes = options.some((option) => option.votes > 0);
+
+        if (isOptionHasVotes) {
+            throw new ApplicationError(
+                "Question cannot be deleted because its options have votes.",
+                400
+            );
+        } else {
+            // Delete associated options first
             await OptionModel.deleteMany({ question: new ObjectId(id) });
+
+            // Then delete the question
             return await QuestionModel.findByIdAndDelete(id);
         }
     } catch (error) {
         throw error;
     }
-}
+};
+
 
 // Function to get  a specific question from database by id.
 export const findQuestion = async(id)=>{

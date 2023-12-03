@@ -28,26 +28,31 @@ app.get('/', (req,res,next)=>{
 app.use('/api/questions', questionRouter);
 app.use('/api/options', optionRouter);
 
+// Wrong routes
+app.use((req,res,next)=>{
+    res.status(404).send("This route does not exist please enter correct route.");
+});
+
 // Error handler
 app.use((err, req, res, next)=>{
     console.log(err);
     if(err instanceof mongoose.Error.ValidationError)
     {
-        return res.status(err.statusCode || 500).json({
+        return res.status(400).json({
             success: "false",
-            msg: err.message
+            error: err.message
         });
     }
     if(err instanceof ApplicationError)
     {
         return res.status(err.statusCode || 500).json({
             success: "false",
-            msg: err.message
+            error: err.message
         });
     }
-    return res.status(500).json({
+    res.status(500).json({
         success: "false",
-        msg: "Something went wrong."
+        error: "Something went wrong."
     });
 });
 
