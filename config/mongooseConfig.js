@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Url string of the database.
-const url = process.env.MONGODB_URL;
+const url = process.env.MONGO_DB;
 
 const connectUsingMongoose = async()=>{
     try {
