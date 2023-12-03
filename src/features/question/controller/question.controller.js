@@ -74,7 +74,7 @@ export const deleteQuestionById = async(req,res,next)=>{
         }
         res.status(200).json({
             success: true,
-            msg: "Option deleted successfully.",
+            msg: "Question deleted successfully.",
             deletedOption: deletedOption
         });
     } catch (error) {
