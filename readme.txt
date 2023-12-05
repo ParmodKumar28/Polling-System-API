@@ -31,11 +31,9 @@ Setup Steps
 - MONGO_DB=<your-mongodb-connection-string>
 
 4. Start the server:
-- Copy code
 - npm start
 
 #API Routes
-# Questions
 * Create a Question:
 * Endpoint: POST /api/questions/create
 * Body: { "title": "Your Question Title" }
