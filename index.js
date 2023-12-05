@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Default route
 app.get('/', (req,res,next)=>{
-    res.send("Welcome Brother.");
+    res.send("Welcome to Polling System API! Go to Postman to test the API.");
 });
 
 // Routes
